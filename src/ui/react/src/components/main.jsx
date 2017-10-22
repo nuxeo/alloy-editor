@@ -95,7 +95,7 @@
             // debounce it, when the handler is being invoked, the target might be no more part
             // of the editor's UI - onActionPerformed causes re-render.
             this._mousedownListener = function (event) {
-                this._setUIHidden(event.target);
+                this._setUIHidden((event.composedPath && event.composedPath()[0]) || event.target);
             }.bind(this);
 
             this._keyDownListener = CKEDITOR.tools.debounce(function(event) {

@@ -176,12 +176,12 @@
             //
             // It should be safe to assume that if you have been able to render the toolbar
             // and request the exclusive mode, then rendering might be kept until the exclusive mode is left.
-            if (!this.state.itemExclusive &&
-                    this.props.editorEvent &&
-                    this.props.editorEvent.data.nativeEvent.target &&
-                    !this.props.editorEvent.data.nativeEvent.target.isContentEditable) {
-                return null;
-            }
+            // if (!this.state.itemExclusive &&
+            //         this.props.editorEvent &&
+            //         this.props.editorEvent.data.nativeEvent.target &&
+            //         !this.props.editorEvent.data.nativeEvent.target.isContentEditable) {
+            //     return null;
+            // }
 
             var buttons = this._getButtons();
             var className = this._getToolbarClassName();

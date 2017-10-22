@@ -140,7 +140,10 @@
             var y = 0;
 
             if (selectionData && nativeEvent) {
-                var elementTarget = new CKEDITOR.dom.element(nativeEvent.target);
+                var elementTarget = new CKEDITOR.dom.element(
+                    (nativeEvent.path && nativeEvent.path[0]) ||
+                    (nativeEvent.composedPath && nativeEvent.composedPath()[0]) ||
+                    nativeEvent.target);
 
                 if (elementTarget.$ && elementTarget.getStyle('overflow') === 'auto') {
                     y = nativeEvent.target.offsetTop + nativeEvent.target.offsetHeight;
