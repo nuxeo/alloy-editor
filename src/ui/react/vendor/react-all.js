@@ -6830,7 +6830,7 @@
                      }
                      var container = ReactMount.findReactContainerForID(id);
                      if (container) {
-                         var doc = container.nodeType === ELEMENT_NODE_TYPE ? container.ownerDocument : container;
+                         var doc = container.nodeType === ELEMENT_NODE_TYPE ? container.getRootNode() || container.ownerDocument : container;
                          listenTo(registrationName, doc);
                      }
                      transaction.getReactMountReady().enqueue(putListener, {
@@ -17589,9 +17589,12 @@
                   * @return {DOMEventTarget} Target node.
                   */
                  function getEventTarget(nativeEvent) {
-                    var target = (nativeEvent.path && nativeEvent.path[0]) ||
-                        (nativeEvent.composedPath && nativeEvent.composedPath()[0]) ||
-                        nativeEvent.target || nativeEvent.srcElement || window;
+                     var target = nativeEvent.target || nativeEvent.srcElement || window;
+
+                     if (nativeEvent.composed && typeof nativeEvent.composedPath === 'function') {
+                         target = nativeEvent.composedPath()[0];
+                     }
+
                      // Safari may fire events on text nodes (Node.TEXT_NODE is 3).
                      // @see http://www.quirksmode.org/js/events_properties.html
                      return target.nodeType === 3 ? target.parentNode : target;
